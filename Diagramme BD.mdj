@@ -3397,20 +3397,50 @@
 											"top": 799,
 											"width": 261.72509765625,
 											"height": 13
+										},
+										{
+											"_type": "ERDColumnView",
+											"_id": "AAAAAAGKIpt16Tx5q9Y=",
+											"_parent": {
+												"$ref": "AAAAAAGKInYksK2UvvE="
+											},
+											"model": {
+												"$ref": "AAAAAAGKIpt1zzx2wX8="
+											},
+											"font": "Arial;13;0",
+											"left": 501,
+											"top": 814,
+											"width": 261.72509765625,
+											"height": 13
+										},
+										{
+											"_type": "ERDColumnView",
+											"_id": "AAAAAAGKIpulcDyBGqw=",
+											"_parent": {
+												"$ref": "AAAAAAGKInYksK2UvvE="
+											},
+											"model": {
+												"$ref": "AAAAAAGKIpulXTx+CNg="
+											},
+											"font": "Arial;13;0",
+											"left": 501,
+											"top": 829,
+											"width": 261.72509765625,
+											"height": 13
 										}
 									],
 									"font": "Arial;13;0",
 									"left": 496,
 									"top": 719,
 									"width": 271.72509765625,
-									"height": 98
+									"height": 128
 								}
 							],
 							"font": "Arial;13;0",
 							"left": 496,
 							"top": 696,
 							"width": 271.72509765625,
-							"height": 121,
+							"height": 151,
 							"nameLabel": {
 								"$ref": "AAAAAAGKInYksK2TKq8="
 							},
@@ -5140,6 +5170,26 @@
 							},
 							"name": "LastCommunication",
 							"type": "DATETIME",
+							"length": 0
+						},
+						{
+							"_type": "ERDColumn",
+							"_id": "AAAAAAGKIpt1zzx2wX8=",
+							"_parent": {
+								"$ref": "AAAAAAGKInYkr62QOSk="
+							},
+							"name": "IsFallen",
+							"type": "BOOLEAN",
+							"length": 0
+						},
+						{
+							"_type": "ERDColumn",
+							"_id": "AAAAAAGKIpulXTx+CNg=",
+							"_parent": {
+								"$ref": "AAAAAAGKInYkr62QOSk="
+							},
+							"name": "IsStolen",
+							"type": "BOOLEAN",
 							"length": 0
 						}
 					]
