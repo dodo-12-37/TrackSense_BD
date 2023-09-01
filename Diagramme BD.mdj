@@ -1561,8 +1561,8 @@
 										"$ref": "AAAAAAGJbt6BAr1CfkQ="
 									},
 									"font": "Arial;12;1",
-									"left": 1488,
-									"top": 893,
+									"left": 1496,
+									"top": 869,
 									"width": 284.68359375,
 									"height": 12,
 									"text": "PlannedRideStatistics"
@@ -1587,8 +1587,8 @@
 												"$ref": "AAAAAAGJbt/fHr10gis="
 											},
 											"font": "Arial;12;0",
-											"left": 1493,
-											"top": 915,
+											"left": 1501,
+											"top": 891,
 											"width": 274.68359375,
 											"height": 12
 										},
@@ -1602,8 +1602,8 @@
 												"$ref": "AAAAAAGJbuAJFb1/sk4="
 											},
 											"font": "Arial;12;0",
-											"left": 1493,
-											"top": 929,
+											"left": 1501,
+											"top": 905,
 											"width": 274.68359375,
 											"height": 12
 										},
@@ -1617,8 +1617,8 @@
 												"$ref": "AAAAAAGJbuAiQb2GN4g="
 											},
 											"font": "Arial;12;0",
-											"left": 1493,
-											"top": 943,
+											"left": 1501,
+											"top": 919,
 											"width": 274.68359375,
 											"height": 12
 										},
@@ -1632,8 +1632,8 @@
 												"$ref": "AAAAAAGJbuA4pr2NJlA="
 											},
 											"font": "Arial;12;0",
-											"left": 1493,
-											"top": 957,
+											"left": 1501,
+											"top": 933,
 											"width": 274.68359375,
 											"height": 12
 										},
@@ -1647,24 +1647,54 @@
 												"$ref": "AAAAAAGJbuY/sb3m1Ds="
 											},
 											"font": "Arial;12;0",
-											"left": 1493,
-											"top": 971,
+											"left": 1501,
+											"top": 947,
+											"width": 274.68359375,
+											"height": 12
+										},
+										{
+											"_type": "ERDColumnView",
+											"_id": "AAAAAAGKUhdepOTGYvw=",
+											"_parent": {
+												"$ref": "AAAAAAGJbt6BAr1EwS8="
+											},
+											"model": {
+												"$ref": "AAAAAAGKUhdekOTDEKc="
+											},
+											"font": "Arial;12;0",
+											"left": 1501,
+											"top": 961,
+											"width": 274.68359375,
+											"height": 12
+										},
+										{
+											"_type": "ERDColumnView",
+											"_id": "AAAAAAGKUheAXuTNVSY=",
+											"_parent": {
+												"$ref": "AAAAAAGJbt6BAr1EwS8="
+											},
+											"model": {
+												"$ref": "AAAAAAGKUheAT+TKYV8="
+											},
+											"font": "Arial;12;0",
+											"left": 1501,
+											"top": 975,
 											"width": 274.68359375,
 											"height": 12
 										}
 									],
 									"font": "Arial;12;0",
-									"left": 1488,
-									"top": 910,
+									"left": 1496,
+									"top": 886,
 									"width": 284.68359375,
-									"height": 78
+									"height": 106
 								}
 							],
 							"font": "Arial;12;0",
-							"left": 1488,
-							"top": 888,
+							"left": 1496,
+							"top": 864,
 							"width": 284.68359375,
-							"height": 100,
+							"height": 128,
 							"nameLabel": {
 								"$ref": "AAAAAAGJbt6BAr1DXvA="
 							},
@@ -2112,7 +2142,7 @@
 									},
 									"visible": false,
 									"font": "Arial;12;0",
-									"left": 1459,
+									"left": 1463,
 									"top": 979,
 									"height": 12,
 									"alpha": 1.5707963267948966,
@@ -2129,7 +2159,7 @@
 										"$ref": "AAAAAAGJbunpJ76Ap8c="
 									},
 									"font": "Arial;12;0",
-									"left": 1462,
+									"left": 1470,
 									"top": 978,
 									"height": 12,
 									"alpha": 0.5235987755982988,
@@ -2164,7 +2194,7 @@
 								"$ref": "AAAAAAGJbt6BAr1CfkQ="
 							},
 							"lineStyle": 2,
-							"points": "1488:970;1433:970",
+							"points": "1496:970;1433:970",
 							"nameLabel": {
 								"$ref": "AAAAAAGJbunpJ76BFSE="
 							},
@@ -4842,8 +4872,28 @@
 							"_parent": {
 								"$ref": "AAAAAAGJbt6BAb1Ak2M="
 							},
-							"name": "...",
+							"name": "Distance",
 							"type": "DOUBLE",
+							"length": 0
+						},
+						{
+							"_type": "ERDColumn",
+							"_id": "AAAAAAGKUhdekOTDEKc=",
+							"_parent": {
+								"$ref": "AAAAAAGJbt6BAb1Ak2M="
+							},
+							"name": "Falls",
+							"type": "INT",
+							"length": 0
+						},
+						{
+							"_type": "ERDColumn",
+							"_id": "AAAAAAGKUheAT+TKYV8=",
+							"_parent": {
+								"$ref": "AAAAAAGJbt6BAb1Ak2M="
+							},
+							"name": "Calories",
+							"type": "INT",
 							"length": 0
 						}
 					]
