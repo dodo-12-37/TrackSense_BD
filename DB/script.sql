@@ -41,7 +41,7 @@ CREATE TABLE UserStatistics (
 );
 -- DROP TABLE CompletedRideStatistics;
 CREATE TABLE CompletedRideStatistics (
-	CompletedRideId INT AUTO_INCREMENT PRIMARY KEY,
+	CompletedRideId VARCHAR(36) UNIQUE,
     AvgSpeed DOUBLE,
     MaxSpeed DOUBLE,
     Falls INT,
@@ -176,3 +176,4 @@ ALTER TABLE CompletedRide
     ADD	 CONSTRAINT FOREIGN KEY FK_PlannedRide(PlannedRideId) REFERENCES PlannedRide(PlannedRideId);
 ALTER TABLE User
 	ADD CONSTRAINT FOREIGN KEY FK_Address(AddressId) REFERENCES Address(AddressId);
+INSERT into User (Userlogin) Values("admin");
