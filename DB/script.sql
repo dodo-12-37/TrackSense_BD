@@ -14,7 +14,7 @@ CREATE TABLE user (
 );
 -- DROP TABLE tracksense;
 CREATE TABLE Tracksense (
-	TracksenseId VARCHAR(30) UNIQUE PRIMARY KEY,
+	TracksenseId VARCHAR(36) UNIQUE PRIMARY KEY,
     UserLogin VARCHAR(100) UNIQUE,
     LastLatitude DECIMAL,
     LastLongitude DECIMAL,
@@ -26,7 +26,7 @@ CREATE TABLE Tracksense (
 
 CREATE TABLE Contact (
 	ContactId INTEGER AUTO_INCREMENT,
-    UserLogin VARCHAR(30),
+    UserLogin VARCHAR(100),
     Fullname VARCHAR(100),
     PhoneNumber VARCHAR(12),
     CONSTRAINT PK_contact PRIMARY KEY (contactId)
@@ -36,7 +36,7 @@ CREATE TABLE UserStatistics (
 	UserLogin VARCHAR(100) UNIQUE,
     AvgSpeed DOUBLE,
     MaxSpeed DOUBLE,
-    Duration DOUBLE,
+    Duration DATETIME,
     CONSTRAINT PK_UserStatistics PRIMARY KEY (UserLogin)
 );
 -- DROP TABLE CompletedRideStatistics;
@@ -51,14 +51,14 @@ CREATE TABLE CompletedRideStatistics (
 );
 -- DROP TABLE CompletedRide;
 CREATE TABLE CompletedRide (
-	CompletedRideId INT NOT NULL AUTO_INCREMENT,
+	CompletedRideId VARCHAR(36) UNIQUE,
     UserLogin VARCHAR(100) UNIQUE,
     PlannedRideId INT NOT NULL UNIQUE,
     CONSTRAINT PK_CompletedRide PRIMARY KEY (CompletedRideId) 
 );
 -- DROP TABLE CompletedRidePoint;
 CREATE TABLE CompletedRidePoint (
-	CompletedRideId INT NOT NULL ,
+	CompletedRideId VARCHAR(36) UNIQUE ,
     LocationId INT NOT NULL,
     RideStep INT,
     Temperature DOUBLE,
@@ -67,15 +67,15 @@ CREATE TABLE CompletedRidePoint (
 );
 
 CREATE TABLE PlannedRide (
-PlannedRideId INT NOT NULL AUTO_INCREMENT,
-UserLogin VARCHAR(100) UNIQUE,
+PlannedRideId VARCHAR(36) UNIQUE,
+UserLogin VARCHAR(100),
 Name VARCHAR(100) NULL,
 isFavorite BOOLEAN,
 CONSTRAINT PK_PlannedRide PRIMARY KEY (PlannedRideId)
 );
 -- DROP TABLE PlannedRidePoint;
 CREATE TABLE PlannedRidePoint (
-	PlannedRideId INT NOT NULL,
+	PlannedRideId VARCHAR(36) UNIQUE,
     LocationId int NOT NULL,
     RideStep INT NULL,
     CONSTRAINT PK_PlannedRidePoint PRIMARY KEY (PlannedRideId,LocationId)
@@ -92,7 +92,7 @@ CREATE TABLE InterestPoint (
 
 -- Drop TABLE PlannedRideStatistics;
 CREATE TABLE PlannedRideStatistics (
-	PlannedRideId INT AUTO_INCREMENT PRIMARY KEY,
+	PlannedRideId VARCHAR(36) UNIQUE,
 	AvgSpeed DOUBLE,
     MaxSpeed DOUBLE,
     Falls INT,
@@ -122,7 +122,7 @@ Password VARCHAR(30) NOT NULL
 CREATE TABLE UserToken (
 	UserTokenId INT AUTO_INCREMENT PRIMARY KEY,
     UserLogin VARCHAR(100) NOT NULL,
-    Token VARCHAR(100) UNIQUE NOT NULL,
+    Token VARCHAR(255) UNIQUE NOT NULL,
     LastUsedAt DATETIME,
     CreatedAt DATETIME NOT NULL
     
@@ -130,7 +130,7 @@ CREATE TABLE UserToken (
 -- DROP TABLE ApplicationToken;
 CREATE TABLE ApplicationToken (
 	ApplicationTokenId INT AUTO_INCREMENT PRIMARY KEY,
-    Token VARCHAR(100) UNIQUE NOT NULL,
+    Token VARCHAR(255) UNIQUE NOT NULL,
     LastUsedAt DATETIME,
     CreatedAt DATETIME NOT NULL
 );
