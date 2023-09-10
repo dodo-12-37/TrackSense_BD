@@ -11,7 +11,7 @@ CREATE TABLE user (
     UserCodePostal VARCHAR(12),
     UserPhoneNumber VARCHAR(12),
     CONSTRAINT PK_user PRIMARY KEY (Userlogin)
-);
+) ENGINE = InnoDB;
 -- DROP TABLE tracksense;
 CREATE TABLE Tracksense (
 	TracksenseId VARCHAR(36) UNIQUE PRIMARY KEY,
@@ -22,7 +22,7 @@ CREATE TABLE Tracksense (
     LastCommunication DATETIME,
     isFallen BOOLEAN,
     isStolen BOOLEAN
-);
+)ENGINE = InnoDB;
 
 CREATE TABLE Contact (
 	ContactId INTEGER AUTO_INCREMENT,
@@ -33,53 +33,48 @@ CREATE TABLE Contact (
 );
 
 CREATE TABLE UserStatistics (
-	UserLogin VARCHAR(100) UNIQUE,
+	UserLogin VARCHAR(100) PRIMARY KEY,
     AvgSpeed DOUBLE,
     MaxSpeed DOUBLE,
-    Duration DATETIME,
-    CONSTRAINT PK_UserStatistics PRIMARY KEY (UserLogin)
-);
+    Duration DATETIME
+    )ENGINE = InnoDB;
 -- DROP TABLE CompletedRideStatistics;
 CREATE TABLE CompletedRideStatistics (
-	CompletedRideId VARCHAR(36) UNIQUE,
+	CompletedRideId VARCHAR(36) PRIMARY KEY,
     AvgSpeed DOUBLE,
     MaxSpeed DOUBLE,
     Falls INT,
     Calories INT,
     Distance DOUBLE,
     Duration DATETIME
-);
+)ENGINE = InnoDB;
 -- DROP TABLE CompletedRide;
 CREATE TABLE CompletedRide (
-	CompletedRideId VARCHAR(36) UNIQUE,
+	CompletedRideId VARCHAR(36) PRIMARY KEY,
     UserLogin VARCHAR(100) UNIQUE,
-    PlannedRideId INT NOT NULL UNIQUE,
-    CONSTRAINT PK_CompletedRide PRIMARY KEY (CompletedRideId) 
-);
+    PlannedRideId VARCHAR(36)
+)ENGINE = InnoDB;
 -- DROP TABLE CompletedRidePoint;
 CREATE TABLE CompletedRidePoint (
-	CompletedRideId VARCHAR(36) UNIQUE ,
+	CompletedRideId VARCHAR(36) PRIMARY KEY ,
     LocationId INT NOT NULL,
     RideStep INT,
     Temperature DOUBLE,
-    `date` DATETIME,
-    CONSTRAINT PK_CompletedRidePoint PRIMARY KEY (CompletedRideId,LocationId)
-);
+    `date` DATETIME
+)ENGINE = InnoDB;
 
 CREATE TABLE PlannedRide (
-PlannedRideId VARCHAR(36) UNIQUE,
+PlannedRideId VARCHAR(36) PRIMARY KEY,
 UserLogin VARCHAR(100),
 Name VARCHAR(100) NULL,
-isFavorite BOOLEAN,
-CONSTRAINT PK_PlannedRide PRIMARY KEY (PlannedRideId)
-);
+isFavorite BOOLEAN
+)ENGINE = InnoDB;
 -- DROP TABLE PlannedRidePoint;
 CREATE TABLE PlannedRidePoint (
-	PlannedRideId VARCHAR(36) UNIQUE,
+	PlannedRideId VARCHAR(36) PRIMARY KEY,
     LocationId int NOT NULL,
-    RideStep INT NULL,
-    CONSTRAINT PK_PlannedRidePoint PRIMARY KEY (PlannedRideId,LocationId)
-);
+    RideStep INT NULL
+)ENGINE = InnoDB;
 
 -- Drop TABLE InterestPoint
 CREATE TABLE InterestPoint (
@@ -88,18 +83,18 @@ CREATE TABLE InterestPoint (
     AddressId INT NOT NULL,
     Name VARCHAR(100) NULL,
     Description TEXT NULL
-);
+)ENGINE = InnoDB;
 
 -- Drop TABLE PlannedRideStatistics;
 CREATE TABLE PlannedRideStatistics (
-	PlannedRideId VARCHAR(36) UNIQUE,
+	PlannedRideId VARCHAR(36) PRIMARY KEY,
 	AvgSpeed DOUBLE,
     MaxSpeed DOUBLE,
     Falls INT,
     Calories INT,
     Distance DOUBLE,
     Duration DATETIME
-);
+)ENGINE = InnoDB;
 
 -- DROP TABLE Address;
 CREATE TABLE Address (
@@ -112,68 +107,65 @@ ZipCode VARCHAR(10),
 City VARCHAR(100),
 State VARCHAR(100),
 Country VARCHAR(100)
-);
+)ENGINE = InnoDB;
 
 CREATE TABLE Credential (
 UserLogin VARCHAR(100) PRIMARY KEY,
 Password VARCHAR(30) NOT NULL
-);
+)ENGINE = InnoDB;
 -- DROP TABLE UserToken;
 CREATE TABLE UserToken (
 	UserTokenId INT AUTO_INCREMENT PRIMARY KEY,
     UserLogin VARCHAR(100) NOT NULL,
-    Token VARCHAR(255) UNIQUE NOT NULL,
+    Token VARCHAR(250) UNIQUE NOT NULL,
     LastUsedAt DATETIME,
     CreatedAt DATETIME NOT NULL
     
-);
+)ENGINE = InnoDB;
 -- DROP TABLE ApplicationToken;
 CREATE TABLE ApplicationToken (
 	ApplicationTokenId INT AUTO_INCREMENT PRIMARY KEY,
-    Token VARCHAR(255) UNIQUE NOT NULL,
+    Token VARCHAR(250) UNIQUE NOT NULL,
     LastUsedAt DATETIME,
     CreatedAt DATETIME NOT NULL
-);
+)ENGINE = InnoDB;
 
 CREATE TABLE Location (
 	LocationId INT AUTO_INCREMENT PRIMARY KEY,
     Latitude DECIMAL NOT NULL,
     Longitude DECIMAL NOT NULL,
     Altitude DECIMAL NULL
-);
+)ENGINE = InnoDB;
 
-ALTER TABLE CompletedRideStatistics 
-	ADD CONSTRAINT FOREIGN KEY FK_CompletedRide (CompletedRideId) REFERENCES CompletedRide(CompletedRide);
+ALTER TABLE completedRideStatistics ADD FOREIGN KEY (CompletedRideId) REFERENCES CompletedRide(CompletedRideId);
 
-ALTER TABLE Tracksense
-	ADD CONSTRAINT FOREIGN KEY FK_User (UserLogin) REFERENCES User(UserLogin);
-ALTER TABLE Contact 
-	ADD CONSTRAINT FOREIGN KEY FK_User (UserLogin) REFERENCES User(UserLogin);
+ALTER TABLE tracksense	ADD FOREIGN KEY  (UserLogin) REFERENCES User(UserLogin);
+ALTER TABLE contact ADD FOREIGN KEY  (UserLogin) REFERENCES User(UserLogin);
 ALTER TABLE UserStatistics
-	ADD CONSTRAINT FOREIGN KEY FK_User (UserLogin) REFERENCES User(UserLogin);
+	ADD FOREIGN KEY  (UserLogin) REFERENCES User(UserLogin);
 ALTER TABLE Credential
-	ADD CONSTRAINT FOREIGN KEY FK_user (UserLogin) REFERENCES User(UserLogin);
+	ADD FOREIGN KEY  (UserLogin) REFERENCES User(UserLogin);
 ALTER TABLE UserToken
-	ADD CONSTRAINT FOREIGN KEY FK_user (UserLogin) REFERENCES User(UserLogin);
+	ADD FOREIGN KEY  (UserLogin) REFERENCES User(UserLogin);
 ALTER TABLE InterestPoint
-	ADD CONSTRAINT FOREIGN KEY FK_user (UserLogin) REFERENCES User(UserLogin),
-    ADD CONSTRAINT FOREIGN KEY FK_Address(AddressId) REFERENCES Address(AddressId);
+	ADD FOREIGN KEY  (UserLogin) REFERENCES User(UserLogin),
+    ADD FOREIGN KEY (AddressId) REFERENCES Address(AddressId);
 ALTER TABLE Address 
-	ADD CONSTRAINT FOREIGN KEY FK_Location(LocationId) REFERENCES Location(LocationId);
+	ADD FOREIGN KEY (LocationId) REFERENCES Location(LocationId);
 ALTER TABLE CompletedRidePoint
-	ADD CONSTRAINT FOREIGN KEY FK_Location(LocationId) REFERENCES Location(LocationId),
-    ADD CONSTRAINT FOREIGN KEY FK_CompletedRide(CompletedRideId) REFERENCES CompletedRide(CompletedRideId);
+	ADD  FOREIGN KEY (LocationId) REFERENCES Location(LocationId),
+    ADD  FOREIGN KEY (CompletedRideId) REFERENCES CompletedRide(CompletedRideId);
 
 ALTER TABLE PlannedRidePoint
-	ADD CONSTRAINT FOREIGN KEY FK_Location(LocationId) REFERENCES Location(LocationId),
-    ADD CONSTRAINT FOREIGN KEY FK_PlannedRide(PlannedRideId) REFERENCES PlannedRide(PlannedRideId);
+	ADD FOREIGN KEY (LocationId) REFERENCES Location(LocationId),
+    ADD  FOREIGN KEY (PlannedRideId) REFERENCES PlannedRide(PlannedRideId);
 ALTER TABLE PlannedRide 
-	ADD	 CONSTRAINT FOREIGN KEY FK_User(UserLogin) REFERENCES User(Userlogin);
+	ADD	  FOREIGN KEY (UserLogin) REFERENCES User(Userlogin);
 ALTER TABLE PlannedRideStatistics 
-	ADD	 CONSTRAINT FOREIGN KEY FK_PlannedRide(PlannedRideId) REFERENCES PlannedRide(PlannedRideId);
+	ADD	  FOREIGN KEY (PlannedRideId) REFERENCES PlannedRide(PlannedRideId);
 ALTER TABLE CompletedRide 
-	ADD	 CONSTRAINT FOREIGN KEY FK_User(UserLogin) REFERENCES User(Userlogin),
-    ADD	 CONSTRAINT FOREIGN KEY FK_PlannedRide(PlannedRideId) REFERENCES PlannedRide(PlannedRideId);
+	ADD	 FOREIGN KEY (UserLogin) REFERENCES User(Userlogin),
+    ADD	 FOREIGN KEY (PlannedRideId) REFERENCES PlannedRide(PlannedRideId);
 ALTER TABLE User
-	ADD CONSTRAINT FOREIGN KEY FK_Address(AddressId) REFERENCES Address(AddressId);
+	ADD  FOREIGN KEY (AddressId) REFERENCES Address(AddressId);
 INSERT into User (Userlogin) Values("admin");
