@@ -168,4 +168,6 @@ ALTER TABLE CompletedRide
     ADD	 FOREIGN KEY (PlannedRideId) REFERENCES PlannedRide(PlannedRideId);
 ALTER TABLE User
 	ADD  FOREIGN KEY (AddressId) REFERENCES Address(AddressId);
+ALTER TABLE Contact
+	ADD FOREIGN KEY (UserLogin) REFERENCES User(UserLogin);
 INSERT into User (Userlogin) Values("admin");
