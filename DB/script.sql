@@ -1,5 +1,6 @@
--- Create DATABASE tracksense;
+
 -- DROP DATABASE tracksense;
+-- Create DATABASE tracksense;
 use tracksense;
 -- DROP TABLE user;
 CREATE TABLE user (
