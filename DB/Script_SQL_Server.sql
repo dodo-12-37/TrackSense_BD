@@ -29,7 +29,7 @@ CREATE TABLE Tracksense (
     LastLatitude DECIMAL(18, 6),
     LastLongitude DECIMAL(18, 6),
     LastAltitude DECIMAL(18, 6),
-    LastCommunication DATETIME,
+    LastCommunication DATEDATETIME,
     isFallen BIT,
     isStolen BIT
 );
@@ -46,7 +46,7 @@ CREATE TABLE UserStatistics (
     UserLogin NVARCHAR(100) PRIMARY KEY,
     AvgSpeed FLOAT,
     MaxSpeed FLOAT,
-    Duration TIME
+    Duration DATETIME
 );
 
 -- DROP TABLE CompletedRideStatistics;
@@ -57,7 +57,7 @@ CREATE TABLE CompletedRideStatistics (
     Falls INT,
     Calories INT,
     Distance FLOAT,
-    Duration TIME
+    Duration DATETIME
 );
 
 -- DROP TABLE CompletedRide;
@@ -74,7 +74,7 @@ CREATE TABLE CompletedRidePoint (
     LocationId INT NOT NULL,
     RideStep INT,
     Temperature FLOAT,
-    [date] DATETIME
+    [date] DATEDATETIME
 );
 
 CREATE TABLE PlannedRide (
@@ -106,12 +106,12 @@ CREATE TABLE InterestPoint (
 CREATE TABLE PlannedRideStatistics (
     PlannedRideId UNIQUEIDENTIFIER PRIMARY KEY,
     AverageSpeed FLOAT NULL,
-	AverageDuration TIME NULL,
+	AverageDuration DATETIME NULL,
     MaximumSpeed FLOAT NULL,
     Falls INT NULL,
     Calories INT NULL,
     Distance FLOAT NULL,
-    Duration TIME NULL
+    Duration DATETIME NULL
 );
 
 -- DROP TABLE Address;
@@ -140,16 +140,16 @@ CREATE TABLE UserToken (
     UserTokenId INT IDENTITY(1,1) PRIMARY KEY,
     UserLogin NVARCHAR(100) NOT NULL,
     Token NVARCHAR(250) UNIQUE NOT NULL,
-    LastUsedAt DATETIME,
-    CreatedAt DATETIME NOT NULL
+    LastUsedAt DATEDATETIME,
+    CreatedAt DATEDATETIME NOT NULL
 );
 
 -- DROP TABLE ApplicationToken;
 CREATE TABLE ApplicationToken (
     ApplicationTokenId INT IDENTITY(1,1) PRIMARY KEY,
     Token NVARCHAR(250) UNIQUE NOT NULL,
-    LastUsedAt DATETIME,
-    CreatedAt DATETIME NOT NULL
+    LastUsedAt DATEDATETIME,
+    CreatedAt DATEDATETIME NOT NULL
 );
 Go
 -- DROP TABLE Location;
