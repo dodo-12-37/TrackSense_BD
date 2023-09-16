@@ -37,6 +37,7 @@
 						"$ref": "AAAAAAGJbk1QFkvqoHo="
 					},
 					"name": "ERDDiagram1",
+					"defaultDiagram": true,
 					"ownedViews": [
 						{
 							"_type": "ERDEntityView",
