@@ -67,7 +67,7 @@ CREATE TABLE PlannedRide (
 	PlannedRideId VARCHAR(36) PRIMARY KEY,
 	UserLogin VARCHAR(100),
 	Name VARCHAR(100) NULL,
-	sFavorite BOOLEAN
+	isFavorite BOOLEAN
 	-- PRIMARY KEY (PlannedRideId, UserLogin)
 )ENGINE = InnoDB;
 -- DROP TABLE PlannedRidePoint;
