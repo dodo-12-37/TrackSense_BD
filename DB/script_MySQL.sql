@@ -56,7 +56,7 @@ CREATE TABLE CompletedRide (
 -- DROP TABLE CompletedRidePoint;
 CREATE TABLE CompletedRidePoint (
 	CompletedRideId VARCHAR(36),
-    LocationId VARCHAR(36) NOT NULL,
+    LocationId INT NOT NULL,
     RideStep INT,
     Temperature DOUBLE,
     `date` DATETIME
@@ -73,7 +73,7 @@ CREATE TABLE PlannedRide (
 -- DROP TABLE PlannedRidePoint;
 CREATE TABLE PlannedRidePoint (
 	PlannedRideId VARCHAR(36) PRIMARY KEY,
-    LocationId VARCHAR(36) NOT NULL,
+    LocationId INT NOT NULL,
     RideStep INT NULL,
     Temperature DOUBLE
 )ENGINE = InnoDB;
@@ -101,7 +101,7 @@ CREATE TABLE PlannedRideStatistic (
 -- DROP TABLE Address;
 CREATE TABLE Address (
 AddressId INT AUTO_INCREMENT PRIMARY KEY,
-LocationId VARCHAR(36) UNIQUE,
+LocationId INT UNIQUE,
 AppartmentNumber VARCHAR(15),
 StreetNumber VARCHAR(15),
 StreetName VARCHAR(100),
@@ -132,7 +132,7 @@ CREATE TABLE ApplicationToken (
 )ENGINE = InnoDB;
 -- DROP TABLE Location;
 CREATE TABLE Location (
-	LocationId VARCHAR(36) PRIMARY KEY,
+	LocationId INT  PRIMARY KEY auto_increment,
     Latitude DOUBLE NOT NULL,
     Longitude DOUBLE NOT NULL,
     Altitude DOUBLE	 NULL,
