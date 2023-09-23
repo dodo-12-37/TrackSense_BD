@@ -5,7 +5,7 @@ INSERT INTO user (Userlogin) VALUES ('admin');
 
 INSERT INTO Location (Latitude, Longitude,Speed)
 VALUES
-	      ('46.778180','-71.313940',12),
+		('46.778180','-71.313940',12),
       ('46.776400','-71.311460',14),
       ('46.776300','-71.311290',13),
       ('46.775700','-71.310500',17),
@@ -21,7 +21,7 @@ VALUES
       ('46.780690','-71.299830',14),
       ('46.781420','-71.298130',18),
       ('46.782220','-71.295470',19);
-  INSERT INTO PlannedRide (PlannedRideId, Userlogin)
+INSERT INTO PlannedRide (PlannedRideId, Userlogin)
 VALUES
     ('2854D652-F4FB-EB65-6807-A49E7A031D6E', 'admin'),
     ('9953DE61-59FF-8AB9-DB8D-8431D862448B', 'admin'),

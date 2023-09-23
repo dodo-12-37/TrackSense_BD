@@ -45,8 +45,10 @@ CREATE TABLE CompletedRideStatistic (
     Falls INT,
     Calories INT,
     Distance DOUBLE,
-    Duration TIME
+    Duration TIME,
+    StartedAt DATETIME
 )ENGINE = InnoDB;
+
 -- DROP TABLE CompletedRide;
 CREATE TABLE CompletedRide (
 	CompletedRideId VARCHAR(36) PRIMARY KEY,
@@ -172,5 +174,41 @@ ALTER TABLE CompletedRide
 ALTER TABLE CompletedRideStatistic
 ADD FOREIGN KEY (CompletedRideId) REFERENCES CompletedRide(CompletedRideId);
 
+----- VIEW TABLE
+CREATE VIEW RideStatistic AS 
+SELECT 
+	c.UserLogin,
+	p.CompletedRideId,
+    MAX(p.date)-MIN(p.date) AS Duration,
+    Max(l.speed) AS MaxSpeed,
+    AVG(l.speed) AS avgSpeed,
+    0 AS Calories,
+    0 AS Fall
+FROM 
+	CompletedRidePoint p
+INNER JOIN 
+	Location l  ON p.locationId = l.LocationId
+INNER JOIN
+	CompletedRide c ON c. CompletedRideId = p.CompletedRideId
+GROUP BY p.CompletedRideId, p.date, l.Speed;
+
+Select * from RideStatistic;
+-- Formula Calories burned per minute = (MET x body weight in Kg x 3.5) ÷ 200  , MET = 7 for Bicycling
+CREATE VIEW UserCompletedRide AS
+SELECT
+	c.UserLogin,
+	crp.CompletedRideId,
+    p.Name AS PlannedRideName,
+    MIN(crp.Date) AS StartedAt,
+    MAX(crp.Date)-MIN(crp.Date) AS Duration,
+    0 AS Distance
+FROM CompletedRidePoint crp
+INNER JOIN Location l ON l.LocationId = crp.LocationId
+INNER JOIN CompletedRide c ON c.CompletedRideId = crp.CompletedRideId
+INNER JOIN PlannedRide p ON p.UserLogin = c.UserLogin
+GROUP BY crp.CompletedRideId;
+    
+select * from usercompletedRide;
+    
 
 
