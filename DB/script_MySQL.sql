@@ -175,11 +175,12 @@ ALTER TABLE CompletedRideStatistic
 ADD FOREIGN KEY (CompletedRideId) REFERENCES CompletedRide(CompletedRideId);
 
 ----- VIEW TABLE
+-- DROP VIEW RideStatistic;
 CREATE VIEW RideStatistic AS 
 SELECT 
 	c.UserLogin,
 	p.CompletedRideId,
-    MAX(p.date)-MIN(p.date) AS Duration,
+    sec_to_time(MAX(p.date)-MIN(p.date)) AS Duration,
     Max(l.speed) AS MaxSpeed,
     AVG(l.speed) AS AvgSpeed,
     0 AS Calories,
@@ -191,17 +192,19 @@ INNER JOIN
 	Location l  ON p.locationId = l.LocationId
 INNER JOIN
 	CompletedRide c ON c. CompletedRideId = p.CompletedRideId
-GROUP BY p.CompletedRideId, p.date, l.Speed;
+GROUP BY c.CompletedRideId;
 
 Select * from RideStatistic;
 -- Formula Calories burned per minute = (MET x body weight in Kg x 3.5) ÷ 200  , MET = 7 for Bicycling
+
+-- DROP view UserCompletedRide
 CREATE VIEW UserCompletedRide AS
 SELECT
 	c.UserLogin,
 	crp.CompletedRideId,
     p.Name AS PlannedRideName,
     MIN(crp.Date) AS StartedAt,
-    MAX(crp.Date)-MIN(crp.Date) AS Duration,
+    sec_to_time(MAX(crp.Date)-MIN(crp.Date)) AS Duration,
     0 AS Distance
 FROM CompletedRidePoint crp
 INNER JOIN Location l ON l.LocationId = crp.LocationId
