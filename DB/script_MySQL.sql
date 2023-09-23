@@ -181,9 +181,10 @@ SELECT
 	p.CompletedRideId,
     MAX(p.date)-MIN(p.date) AS Duration,
     Max(l.speed) AS MaxSpeed,
-    AVG(l.speed) AS avgSpeed,
+    AVG(l.speed) AS AvgSpeed,
     0 AS Calories,
-    0 AS Fall
+    0 AS Falls,
+    0 AS Distance
 FROM 
 	CompletedRidePoint p
 INNER JOIN 
