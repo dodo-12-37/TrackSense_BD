@@ -137,8 +137,8 @@ CREATE TABLE Location (
 	LocationId INT  PRIMARY KEY auto_increment,
     Latitude DOUBLE NOT NULL,
     Longitude DOUBLE NOT NULL,
-    Altitude DOUBLE	 NULL,
-    Speed DOUBLE NULL
+    Altitude DOUBLE	 Default 0,
+    Speed DOUBLE Default 0
 )ENGINE = InnoDB;
 
 
@@ -194,7 +194,7 @@ INNER JOIN
 	CompletedRide c ON c. CompletedRideId = p.CompletedRideId
 GROUP BY c.CompletedRideId;
 
-Select * from RideStatistic;
+
 -- Formula Calories burned per minute = (MET x body weight in Kg x 3.5) ÷ 200  , MET = 7 for Bicycling
 
 -- DROP view UserCompletedRide
@@ -212,7 +212,7 @@ INNER JOIN CompletedRide c ON c.CompletedRideId = crp.CompletedRideId
 INNER JOIN PlannedRide p ON p.UserLogin = c.UserLogin
 GROUP BY crp.CompletedRideId;
     
-select * from usercompletedRide;
+
     
 
 
