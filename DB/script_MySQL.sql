@@ -16,9 +16,9 @@ CREATE TABLE User (
 CREATE TABLE Tracksense (
 	TracksenseId VARCHAR(36) PRIMARY KEY,
     UserLogin VARCHAR(100) UNIQUE,
-    LastLatitude DECIMAL,
-    LastLongitude DECIMAL,
-    LastAltitude DECIMAL,
+    LastLatitude DECIMAL(12,10),
+    LastLongitude DECIMAL(12,10),
+    LastAltitude DECIMAL(12,10),
     LastCommunication DATETIME,
     isFallen BOOLEAN,
     isStolen BOOLEAN
@@ -33,18 +33,18 @@ CREATE TABLE Contact (
 
 CREATE TABLE UserStatistic (
 	UserLogin VARCHAR(100) PRIMARY KEY,
-    AvgSpeed DOUBLE,
-    MaxSpeed DOUBLE,
+    AvgSpeed DOUBLE PRECISION(3,1),
+    MaxSpeed DOUBLE PRECISION(3,1),
     Duration TIME
     )ENGINE = InnoDB;
 -- DROP TABLE CompletedRideStatistic;
 CREATE TABLE CompletedRideStatistic (
 	CompletedRideId VARCHAR(36) PRIMARY KEY,
-    AvgSpeed DOUBLE,
-    MaxSpeed DOUBLE,
+    AvgSpeed DOUBLE PRECISION(3,1),
+    MaxSpeed DOUBLE PRECISION(3,1),
     Falls INT,
     Calories INT,
-    Distance DOUBLE,
+    Distance DOUBLE PRECISION(3,1),
     Duration TIME,
     StartedAt DATETIME
 )ENGINE = InnoDB;
@@ -60,7 +60,7 @@ CREATE TABLE CompletedRidePoint (
 	CompletedRideId VARCHAR(36),
     LocationId INT NOT NULL,
     RideStep INT,
-    Temperature DOUBLE,
+    Temperature DOUBLE(3,1),
     `date` DATETIME
     -- 
 )ENGINE = InnoDB;
@@ -92,11 +92,11 @@ CREATE TABLE InterestPoint (
 -- Drop TABLE PlannedRideStatistics;
 CREATE TABLE PlannedRideStatistic (
 	PlannedRideId VARCHAR(36) PRIMARY KEY,
-	AvgSpeed DOUBLE,
-    MaxSpeed DOUBLE,
+	AvgSpeed DOUBLE(3,1),
+    MaxSpeed DOUBLE(3,1),
     Falls INT,
     Calories INT,
-    Distance DOUBLE,
+    Distance DOUBLE(3,1),
     Duration DATETIME
 )ENGINE = InnoDB;
 
@@ -135,10 +135,10 @@ CREATE TABLE ApplicationToken (
 -- DROP TABLE Location;
 CREATE TABLE Location (
 	LocationId INT  PRIMARY KEY auto_increment,
-    Latitude DOUBLE NOT NULL,
-    Longitude DOUBLE NOT NULL,
-    Altitude DOUBLE	 Default 0,
-    Speed DOUBLE Default 0
+    Latitude DOUBLE PRECISION (12,10) NOT NULL,
+    Longitude DOUBLE PRECISION(12,10) NOT NULL,
+    Altitude DOUBLE PRECISION(3,1) Default 0,
+    Speed DOUBLE PRECISION(3,1) Default 0
 )ENGINE = InnoDB;
 
 
@@ -181,8 +181,8 @@ SELECT
 	c.UserLogin,
 	p.CompletedRideId,
     sec_to_time(MAX(p.date)-MIN(p.date)) AS Duration,
-    Max(l.speed) AS MaxSpeed,
-    AVG(l.speed) AS AvgSpeed,
+    ROUND(Max(l.speed),1) AS MaxSpeed,
+    ROUND(AVG(l.speed),1) AS AvgSpeed,
     0 AS Calories,
     0 AS Falls,
     0 AS Distance
@@ -194,7 +194,7 @@ INNER JOIN
 	CompletedRide c ON c. CompletedRideId = p.CompletedRideId
 GROUP BY c.CompletedRideId;
 
-
+-- select * from RideStatistic
 -- Formula Calories burned per minute = (MET x body weight in Kg x 3.5) ÷ 200  , MET = 7 for Bicycling
 
 -- DROP view UserCompletedRide
