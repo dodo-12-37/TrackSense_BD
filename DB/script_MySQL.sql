@@ -34,18 +34,18 @@ CREATE TABLE Contact (
 
 CREATE TABLE UserStatistic (
 	UserLogin VARCHAR(100) PRIMARY KEY,
-    AvgSpeed DOUBLE PRECISION(3,1),
-    MaxSpeed DOUBLE PRECISION(3,1),
+    AvgSpeed DECIMAL(3,1),
+    MaxSpeed DECIMAL(3,1),
     Duration TIME
     )ENGINE = InnoDB;
 -- DROP TABLE CompletedRideStatistic;
 CREATE TABLE CompletedRideStatistic (
 	CompletedRideId VARCHAR(36) PRIMARY KEY,
-    AvgSpeed DOUBLE PRECISION(3,1),
-    MaxSpeed DOUBLE PRECISION(3,1),
+    AvgSpeed DECIMAL(3,1),
+    MaxSpeed DECIMAL(3,1),
     Falls INT,
     Calories INT,
-    Distance DOUBLE PRECISION(3,1),
+    Distance DECIMAL(3,1),
     Duration TIME,
     StartedAt DATETIME
 )ENGINE = InnoDB;
@@ -61,7 +61,7 @@ CREATE TABLE CompletedRidePoint (
 	CompletedRideId VARCHAR(36),
     LocationId INT NOT NULL,
     RideStep INT,
-    Temperature DOUBLE(3,1),
+    Temperature DECIMAL(3,1),
     `date` DATETIME
     -- 
 )ENGINE = InnoDB;
@@ -93,11 +93,11 @@ CREATE TABLE InterestPoint (
 -- Drop TABLE PlannedRideStatistics;
 CREATE TABLE PlannedRideStatistic (
 	PlannedRideId VARCHAR(36) PRIMARY KEY,
-	AvgSpeed DOUBLE(3,1),
-    MaxSpeed DOUBLE(3,1),
+	AvgSpeed DECIMAL(3,1),
+    MaxSpeed DECIMAL(3,1),
     Falls INT,
     Calories INT,
-    Distance DOUBLE(3,1),
+    Distance DECIMAL(3,1),
     Duration DATETIME
 )ENGINE = InnoDB;
 
@@ -136,10 +136,10 @@ CREATE TABLE ApplicationToken (
 -- DROP TABLE Location;
 CREATE TABLE Location (
 	LocationId INT  PRIMARY KEY auto_increment,
-    Latitude DOUBLE PRECISION (12,10) NOT NULL,
-    Longitude DOUBLE PRECISION(12,10) NOT NULL,
-    Altitude DOUBLE PRECISION(3,1) Default 0,
-    Speed DOUBLE PRECISION(3,1) Default 0
+    Latitude DECIMAL (12,10) NOT NULL,
+    Longitude DECIMAL(12,10) NOT NULL,
+    Altitude DECIMAL(3,1) Default 0,
+    Speed DECIMAL(3,1) Default 0
 )ENGINE = InnoDB;
 
 
@@ -209,9 +209,6 @@ END//
 
 DELIMITER ;
 
-
-
------ VIEW TABLE
 -- DROP VIEW RideStatistic;
 -- SELECT * FROM RideStatistic;
 
@@ -248,8 +245,5 @@ INNER JOIN CompletedRide c ON c.CompletedRideId = crp.CompletedRideId
 INNER JOIN PlannedRide p ON p.UserLogin = c.UserLogin
 GROUP BY crp.CompletedRideId
 ORDER BY l.LocationId ASC;
-
-SELECT * FROM UserCompletedRide;
-SELECT * FROM RideStatistic;
 
 
