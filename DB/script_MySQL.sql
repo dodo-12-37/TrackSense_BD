@@ -1,6 +1,7 @@
 
 -- DROP DATABASE tracksense;
 -- Create DATABASE tracksense;
+
 use tracksense;
 -- DROP TABLE user;
 CREATE TABLE User (
@@ -174,8 +175,40 @@ ALTER TABLE CompletedRide
 ALTER TABLE CompletedRideStatistic
 ADD FOREIGN KEY (CompletedRideId) REFERENCES CompletedRide(CompletedRideId);
 
+
+CREATE FUNCTION calculateDistance(LocationId_At_Start INT, LocationId_At_End INT) RETURNS DOUBLE(4,1)
+BEGIN
+    DECLARE totalDistance DOUBLE;
+
+    WITH DistanceOfPointsCTE AS (
+        SELECT 
+            l1.`LocationId` AS id,
+            l1.Latitude AS lat1,
+            l1.Longitude AS lon1,
+            l2.Latitude AS lat2,
+            l2.Longitude AS lon2,
+            ST_Distance_Sphere(
+                POINT(l1.Latitude, l1.Longitude),
+                POINT(l2.Latitude, l2.Longitude)
+            )/1000 AS distance
+        FROM 
+            Location l1
+        INNER JOIN 
+            Location l2 
+        ON l2.LocationId = l1.LocationId + 1
+    )
+
+    SELECT SUM(distance) 
+        INTO totalDistance 
+        FROM DistanceOfPointsCTE
+        WHERE id BETWEEN LocationId_At_Start AND LocationId_At_End -1;
+
+    RETURN totalDistance;
+END;
+
 ----- VIEW TABLE
 -- DROP VIEW RideStatistic;
+
 CREATE VIEW RideStatistic AS 
 SELECT 
 	c.UserLogin,
@@ -185,7 +218,7 @@ SELECT
     ROUND(AVG(l.speed),1) AS AvgSpeed,
     0 AS Calories,
     0 AS Falls,
-    0 AS Distance
+    calculateDistance(MIN(l.`LocationId`),MAX(l.`LocationId`)) AS Distance
 FROM 
 	CompletedRidePoint p
 INNER JOIN 
@@ -194,10 +227,7 @@ INNER JOIN
 	CompletedRide c ON c. CompletedRideId = p.CompletedRideId
 GROUP BY c.CompletedRideId;
 
--- select * from RideStatistic
--- Formula Calories burned per minute = (MET x body weight in Kg x 3.5) ÷ 200  , MET = 7 for Bicycling
 
--- DROP view UserCompletedRide
 CREATE VIEW UserCompletedRide AS
 SELECT
 	c.UserLogin,
@@ -205,14 +235,15 @@ SELECT
     p.Name AS PlannedRideName,
     MIN(crp.Date) AS StartedAt,
     sec_to_time(MAX(crp.Date)-MIN(crp.Date)) AS Duration,
-    0 AS Distance
+    calculateDistance(MIN(l.`LocationId`),MAX(l.`LocationId`)) AS Distance
 FROM CompletedRidePoint crp
 INNER JOIN Location l ON l.LocationId = crp.LocationId
 INNER JOIN CompletedRide c ON c.CompletedRideId = crp.CompletedRideId
 INNER JOIN PlannedRide p ON p.UserLogin = c.UserLogin
-GROUP BY crp.CompletedRideId;
-    
+GROUP BY crp.CompletedRideId
+ORDER BY l.LocationId ASC;
 
-    
+SELECT * FROM UserCompletedRide;
+SELECT * FROM RideStatistic;
 
 
