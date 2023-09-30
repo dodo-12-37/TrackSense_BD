@@ -175,39 +175,45 @@ ALTER TABLE CompletedRide
 ALTER TABLE CompletedRideStatistic
 ADD FOREIGN KEY (CompletedRideId) REFERENCES CompletedRide(CompletedRideId);
 
+DELIMITER //
 
-CREATE FUNCTION calculateDistance(LocationId_At_Start INT, LocationId_At_End INT) RETURNS DOUBLE(4,1)
+CREATE FUNCTION calculateDistance(
+    LocationId_At_Start INT,
+    LocationId_At_End INT
+) RETURNS DOUBLE(4, 1) 
 BEGIN
-    DECLARE totalDistance DOUBLE;
+   DECLARE totalDistance DOUBLE DEFAULT 0.0;
 
-    WITH DistanceOfPointsCTE AS (
-        SELECT 
-            l1.`LocationId` AS id,
-            l1.Latitude AS lat1,
-            l1.Longitude AS lon1,
-            l2.Latitude AS lat2,
-            l2.Longitude AS lon2,
-            ST_Distance_Sphere(
-                POINT(l1.Latitude, l1.Longitude),
-                POINT(l2.Latitude, l2.Longitude)
-            )/1000 AS distance
-        FROM 
-            Location l1
-        INNER JOIN 
-            Location l2 
-        ON l2.LocationId = l1.LocationId + 1
-    )
+   SELECT
+       SUM(distance)
+   INTO totalDistance
+   FROM
+       (
+           SELECT 
+               l1.`LocationId` AS id,
+               ST_Distance_Sphere(
+                   POINT(l1.Latitude, l1.Longitude),
+                   POINT(l2.Latitude, l2.Longitude)
+               )/1000 AS distance
+           FROM 
+               Location l1
+           JOIN 
+               Location l2 
+           ON l2.LocationId = l1.LocationId + 1
+           WHERE
+               l1.LocationId BETWEEN LocationId_At_Start AND LocationId_At_End - 1
+       ) AS Subquery;
 
-    SELECT SUM(distance) 
-        INTO totalDistance 
-        FROM DistanceOfPointsCTE
-        WHERE id BETWEEN LocationId_At_Start AND LocationId_At_End -1;
+   RETURN totalDistance;
+END//
 
-    RETURN totalDistance;
-END;
+DELIMITER ;
+
+
 
 ----- VIEW TABLE
 -- DROP VIEW RideStatistic;
+-- SELECT * FROM RideStatistic;
 
 CREATE VIEW RideStatistic AS 
 SELECT 
