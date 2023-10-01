@@ -2,7 +2,7 @@
 -- DROP DATABASE tracksense;
 -- Create DATABASE tracksense;
 
-use tracksense;
+-- use tracksense;
 -- DROP TABLE user;
 CREATE TABLE User (
 	UserLogin VARCHAR(100) PRIMARY KEY,
@@ -78,7 +78,7 @@ CREATE TABLE PlannedRidePoint (
 	PlannedRideId VARCHAR(36) PRIMARY KEY,
     LocationId INT NOT NULL,
     RideStep INT NULL,
-    Temperature DOUBLE
+    Temperature DECIMAL(3,1) NULL,
 )ENGINE = InnoDB;
 
 -- Drop TABLE InterestPoint
@@ -180,12 +180,12 @@ DELIMITER //
 CREATE FUNCTION calculateDistance(
     LocationId_At_Start INT,
     LocationId_At_End INT
-) RETURNS DOUBLE(4, 1) 
+) RETURNS DECIMAL(5, 2) 
 BEGIN
-   DECLARE totalDistance DOUBLE DEFAULT 0.0;
+   DECLARE totalDistance DECIMAL(5, 2) DEFAULT 0.0;
 
    SELECT
-       SUM(distance)
+      IFNULL(SUM(distance), 0.0) 
    INTO totalDistance
    FROM
        (
@@ -203,11 +203,12 @@ BEGIN
            WHERE
                l1.LocationId BETWEEN LocationId_At_Start AND LocationId_At_End - 1
        ) AS Subquery;
-
    RETURN totalDistance;
-END//
+END;
+//
 
 DELIMITER ;
+
 
 -- DROP VIEW RideStatistic;
 -- SELECT * FROM RideStatistic;
@@ -230,7 +231,7 @@ INNER JOIN
 	CompletedRide c ON c. CompletedRideId = p.CompletedRideId
 GROUP BY c.CompletedRideId;
 
-
+-- DROP VIEW UserCompletedRide;
 CREATE VIEW UserCompletedRide AS
 SELECT
 	c.UserLogin,
@@ -242,7 +243,7 @@ SELECT
 FROM CompletedRidePoint crp
 INNER JOIN Location l ON l.LocationId = crp.LocationId
 INNER JOIN CompletedRide c ON c.CompletedRideId = crp.CompletedRideId
-INNER JOIN PlannedRide p ON p.UserLogin = c.UserLogin
+INNER JOIN PlannedRide p ON p.`PlannedRideId` = c.`PlannedRideId`
 GROUP BY crp.CompletedRideId
 ORDER BY l.LocationId ASC;
 
