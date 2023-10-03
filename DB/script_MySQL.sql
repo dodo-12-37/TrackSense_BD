@@ -1,3 +1,4 @@
+-- Active: 1696009028324@@127.0.0.1@3306@tracksense
 
 -- DROP DATABASE tracksense;
 -- Create DATABASE tracksense;
@@ -232,6 +233,9 @@ INNER JOIN
 GROUP BY c.CompletedRideId;
 
 -- DROP VIEW UserCompletedRide;
+-- use db_a9f4cd_track;
+-- use tracksense;
+-- version avec planneRide
 CREATE VIEW UserCompletedRide AS
 SELECT
 	c.UserLogin,
@@ -243,8 +247,6 @@ SELECT
 FROM CompletedRidePoint crp
 INNER JOIN Location l ON l.LocationId = crp.LocationId
 INNER JOIN CompletedRide c ON c.CompletedRideId = crp.CompletedRideId
-INNER JOIN PlannedRide p ON p.`PlannedRideId` = c.`PlannedRideId`
+LEFT JOIN PlannedRide p ON p.`PlannedRideId` = c.`PlannedRideId` 
 GROUP BY crp.CompletedRideId
 ORDER BY l.LocationId ASC;
-
-
