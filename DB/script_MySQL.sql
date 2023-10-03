@@ -1,4 +1,4 @@
--- Active: 1696009028324@@127.0.0.1@3306@tracksense
+-- Active: 1696214803360@@MYSQL5049.site4now.net@3306@db_a9f4cd_track
 
 -- DROP DATABASE tracksense;
 -- Create DATABASE tracksense;
@@ -249,4 +249,4 @@ INNER JOIN Location l ON l.LocationId = crp.LocationId
 INNER JOIN CompletedRide c ON c.CompletedRideId = crp.CompletedRideId
 LEFT JOIN PlannedRide p ON p.`PlannedRideId` = c.`PlannedRideId` 
 GROUP BY crp.CompletedRideId
-ORDER BY l.LocationId ASC;
+ORDER BY StartedAt DESC;
