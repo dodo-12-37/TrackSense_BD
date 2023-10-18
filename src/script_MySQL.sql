@@ -114,10 +114,10 @@ City VARCHAR(100),
 State VARCHAR(100),
 Country VARCHAR(100)
 )ENGINE = InnoDB;
-
+-- DROP TABLE Credential;
 CREATE TABLE Credential (
 UserLogin VARCHAR(100) PRIMARY KEY,
-Password VARCHAR(30) NOT NULL
+HashedPassword VARCHAR(100) NOT NULL
 )ENGINE = InnoDB;
 -- DROP TABLE UserToken;
 CREATE TABLE UserToken (
